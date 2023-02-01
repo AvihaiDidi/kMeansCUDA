@@ -1,5 +1,5 @@
 # kMeansCUDA
-k means for image processing using Nvidia's numba library to execute the algorithem on the GPU
+k means for image processing using Nvidia's numba library to execute the algorithm on the GPU
 
 Example use of this script on some pictures I took with my phone:
 
