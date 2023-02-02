@@ -1,13 +1,11 @@
-# CUDA accelerated k-means for image processing using Nvidia's numba library
+# Fast Approximate K means for image processing using Nvidia's numba library
+# This main cause of slowness is the normal GPU implementation of kmeans is the conditional statements, so in this version I completly got rid of those
+# Instead, I use euclidian distance between pixels as a measure of similarity (essentially, two identical pixels are assigned a value of 1, and two pixels that are as far apart as possible are assigned a value of 0
+# Naturally, that means this algorithem isn't really K-means anymore, but it's close enough
 
 import numpy as np
-from imageio.v2 import imread, imwrite
-from os.path import isfile, join
-from os import listdir
 from numba import jit, cuda
 from math import sqrt
-from skimage import img_as_ubyte
-import imghdr
 
 import sysAndConsts as sac
 
