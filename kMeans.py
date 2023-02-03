@@ -12,9 +12,6 @@ import imghdr
 def singleImg(path, iterations, k, printLog = False, dest = "", fast = False):
     if printLog:
         print(f"Attempting to load {path}")
-        
-    img_data = sac.loadImage(path)
-        
     try:
         img_data = sac.loadImage(path)
     except:
