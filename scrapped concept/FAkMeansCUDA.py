@@ -5,7 +5,7 @@
 
 """
         The equation I chose to use to determine the influence strength is:
-        Influence_i = 1/N - D/totaldis
+        Influence_i = 2/N - D/totaldis
         where N is the number of centroid and D is the distance between the pixel and centroid
         (the sum of the total influence here is one, and inversly proportional to the distance
 """
