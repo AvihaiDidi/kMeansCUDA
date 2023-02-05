@@ -1,4 +1,4 @@
-# FAKmeansCuda
+# FAKMeansCuda
 
 This class is a scrapped idea for a Fast Approximate (FA) version of the k-means algorithem.
 The idea was to get rid of all conditional statements in the algorithem, and create a version where the effect strength on each centroid is based not on which centroid is closest, but on the euclidian distance between each pixel and each centroid.
