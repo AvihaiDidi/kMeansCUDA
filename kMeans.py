@@ -8,8 +8,9 @@ from os.path import isfile, join
 from os import listdir
 import imghdr
 
-# process a single image located at 'path', returns -1 if couldn't and 0 otherwise
-def singleImg(path, iterations, k, printLog = False, dest = "", CPU = False):
+
+def singleImg(path: str, iterations: int, k: int, printLog: bool = False, dest: str = "", CPU: bool = False) -> int:
+    # process a single image located at 'path', returns -1 if couldn't and 0 otherwise
     if printLog:
         print(f"Attempting to load {path}")
     try:
@@ -42,8 +43,8 @@ def singleImg(path, iterations, k, printLog = False, dest = "", CPU = False):
             print(f"New image saved as {dest}/{path.split('/')[-1].split('.')[0]} - k = {k}")
     return 0
 
-# process a list of images given in 'pathlist', returns the number of images that were processed succsusfully
-def multiImg(pathlist, iterations, k, printLog = False, dest = "", CPU = False):
+def multiImg(pathlist: list, iterations: int, k: int, printLog: bool = False, dest: str = "", CPU: bool = False) -> int:
+    # process a list of images given in 'pathlist', returns the number of images that were processed succsusfully
     count = 0
     for path in pathlist:
         ret = singleImg(path, iterations, k, printLog, dest, CPU)
@@ -51,8 +52,8 @@ def multiImg(pathlist, iterations, k, printLog = False, dest = "", CPU = False):
             count += 1
     return count
 
-# get a path to a folder and process all images in that folder, save the result in {dest}
-def allInFolder(path, iterations, k, printLog = False, dest = "", CPU = False):
+def allInFolder(path: str, iterations: int, k: int, printLog: bool = False, dest: str = "", CPU: bool = False):
+    # get a path to a folder and process all images in that folder, save the result in {dest}
     pathlist = [f"{path}/{f}" for f in listdir(path) if isfile(join(path, f)) and f.lower().endswith(sac.IMAGE_FORMATS)]
     if printLog:
         print(f"The folder {path} contains {len(pathlist)} images.")

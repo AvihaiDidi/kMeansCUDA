@@ -12,19 +12,21 @@ BLOCKS_PER_GRID = 256
 THREADS_PER_BLOCK = 256
 IMAGE_FORMATS = ('.png', '.jpg', '.jpeg', '.tiff', '.bmp')
 
-# get a k by dim matrix of random numbers that will be used as the initial centroids
-def initCentroids(K, dim):
+def initCentroids(K: int, dim: int):
+    # get a k by dim matrix of random numbers that will be used as the initial centroids
     random.seed(RANDOM_SEED) # this is here to keep behavior consistent when using the same inputs
     return random.rand(K, dim)
 
-# loads and normalize an image
-# returns an array whose zeroth element is the flattened image and the next two are its original height and width
-def loadImage(path):
+def loadImage(path: str):
+    """
+    loads and normalize an image
+    returns an array whose zeroth element is the flattened image and the next two are its original height and width
+    """
     img = imread(path)
     img = img.astype(float32) / 255.
     img_size = img.shape
     return [img.reshape(img_size[0] * img_size[1], img_size[2]), img_size[0], img_size[1]]
 
-# save an image as filename
-def saveImage(img, filename):
+def saveImage(img, filename: str):
+    # save an image as filename
     imwrite(f"{filename}.png", img_as_ubyte(img))

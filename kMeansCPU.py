@@ -8,8 +8,8 @@ import os.path
 
 import sysAndConsts as sac
 
-# return the centroid index which is closest to pixel
 def closestCentroidIndex(pixel, centroids):
+    # return the centroid index which is closest to pixel
     closest = -1
     min_dist = np.Infinity
     for index, centroid in enumerate(centroids):
@@ -19,9 +19,11 @@ def closestCentroidIndex(pixel, centroids):
             closest = index
     return closest
 
-# finds the K means and returns them, does {iterations} iterations
-# img is the zeroth elemenet of the array loadImage(path) returns
-def getCentroids(iterations, k, img, printprog = True):
+def getCentroids(iterations: int, k: int, img, printprog: bool = True):
+    """
+    finds the K means and returns them, does {iterations} iterations
+    img is the zeroth elemenet of the array loadImage(path) returns
+    """
     DATA_DIMMENSION = len(img[0])
     centroids = sac.initCentroids(k, DATA_DIMMENSION)
     for iteration in range(iterations):
@@ -40,8 +42,8 @@ def getCentroids(iterations, k, img, printprog = True):
                 centroids[index] = new_centroids[index] / new_centroids_count[index]
     return centroids
 
-# replace each pixel in img with the closest centroid, imgdata is what loadImage returns
 def newImg(imgdata, centroids):
+    # replace each pixel in img with the closest centroid, imgdata is what loadImage returns
     new_img = []
     height = imgdata[1]
     width = imgdata[2]

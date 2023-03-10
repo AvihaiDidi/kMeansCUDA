@@ -18,9 +18,11 @@ import sysAndConsts as sac
 
 # Internal functions are prefixed with _ and arn't supposed to be used directly (you can use them anyways if you want to tho)
 
-# finds the K means and returns them, does {iterations} iterations
-# img is the zeroth elemenet of the array _loadImage(path) returns
-def getCentroids(iterations, k, img, printprog = False):
+def getCentroids(iterations: int, k: int, img, printprog: bool = False):
+    """
+    finds the K means and returns them, does {iterations} iterations
+    img is the zeroth elemenet of the array _loadImage(path) returns
+    """
     dim = len(img[0])
     img_device = cuda.to_device(img)
     centroids = sac.initCentroids(k, dim)
@@ -38,9 +40,12 @@ def getCentroids(iterations, k, img, printprog = False):
         centroids = new_centroids
     return centroids
 
-# creates a new image using the original image and the centroids
-# imgdata is the output of _loadImage
+
 def newImg(imgdata, centroids):
+    """
+    creates a new image using the original image and the centroids
+    imgdata is the output of _loadImage
+    """
     dim = len(imgdata[0][0])
     height = imgdata[1]
     width = imgdata[2]
@@ -53,10 +58,12 @@ def newImg(imgdata, centroids):
     cuda.synchronize()
     return np.reshape(new_img, (height, width, dim))
 
-# gpu kernel for finding the centroids
-# note that new_centroids_device is flattened, this is done to make working with the atomic functions easier
 @cuda.jit
 def _new_centroids_kernel(img_device, centroids_device, new_centroids_device):
+    """
+    gpu kernel for finding the centroids
+    note that new_centroids_device is flattened, this is done to make working with the atomic functions easier
+    """
     start = cuda.grid(1)
     stride = cuda.gridsize(1)
     for i in range(start, img_device.shape[0], stride):
@@ -78,10 +85,12 @@ def _new_centroids_kernel(img_device, centroids_device, new_centroids_device):
                 cuda.atomic.add(new_centroids_device, j + centroid_index*len(pixel), 
                                 pixel[j] * Influence_i)
 
-# gpu kernel for generating the new image
-# note that new_centroids_device is flattened
 @cuda.jit
 def _new_image_kernel(img_device, new_img_device, centroids_device):
+    """
+    gpu kernel for generating the new image
+    note that new_centroids_device is flattened
+    """
     start = cuda.grid(1)
     stride = cuda.gridsize(1)
     for i in range(start, img_device.shape[0], stride):
